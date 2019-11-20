@@ -18,7 +18,7 @@ public class FileIO {
 
     void writeFile (String text,String name){
         // write the content in file
-        path += name + ".db";
+        path += name + ".json";
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             bufferedWriter.write(text);
             bufferedWriter.close();
@@ -29,7 +29,7 @@ public class FileIO {
 
     void writeFile (String name){
         // write the content in file
-        path += name + ".db";
+        path += name + ".json";
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             bufferedWriter.close();
         } catch (IOException e) {
@@ -38,7 +38,7 @@ public class FileIO {
     }
     
     String readFile(String name) {
-        name += ".db";
+        name += ".json";
         String file = "";
         // read the content from file
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {

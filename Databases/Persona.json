@@ -1,0 +1,46 @@
+[
+  {
+    "columns": {
+      "name": {
+        "type": "String",
+        "required": true
+      },
+      "lastname": {
+        "type": "String",
+        "required": true
+      },
+      "age": {
+        "type": "int",
+        "required": false
+      }
+    }
+  },
+  {
+    "datasets": [
+      {
+        "age": 25,
+        "eyeColor": "blue",
+        "name": "Sheryl",
+        "lastname": "Hebert"
+      },
+      {
+        "age": 26,
+        "eyeColor": "green",
+        "name": "Warner",
+        "lastname": "Davenport"
+      },
+      {
+        "age": 27,
+        "eyeColor": "blue",
+        "name": "Robert",
+        "lastname": "Glenn"
+      },
+      {
+        "age": 30,
+        "eyeColor": "green",
+        "name": "Hutchinson",
+        "lastname": "Warner"
+      }
+    ]
+  }
+]
