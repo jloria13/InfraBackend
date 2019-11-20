@@ -1,0 +1,24 @@
+[
+    {
+      "databases": [
+        {
+          "database": {
+            "name": "TEC",
+            "tables": [
+              "Persona"
+            ]
+          }
+        },
+        {
+          "database": {
+            "name": "eCommmerce",
+            "tables": [
+              "Client",
+              "Product",
+              "Order"
+            ]
+          }
+        }
+      ]
+    }
+  ]

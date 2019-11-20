@@ -17,10 +17,10 @@ public class FileIO {
     String path;
 
 
-    void writeFile (String text,String name,String directory){
+    void writeFile (String text,String file,String directory){
         // write the content in file
-        setPath(directory);
-        path += name + ".json";
+        file += ".json";
+        setPath(directory,file);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             bufferedWriter.write(text);
             bufferedWriter.close();
@@ -29,9 +29,9 @@ public class FileIO {
         }
     }
 
-    void writeFile (String name){
+    void writeFile (String file){
         // write the content in file
-        path += name + ".json";
+        path += file + ".json";
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             bufferedWriter.close();
         } catch (IOException e) {
@@ -39,28 +39,30 @@ public class FileIO {
         }
     }
     
-    String readFile(String name,String directory) {
-        setPath(directory);
-        name += ".json";
+    String readFile(String fileName,String directory) {
+        fileName += ".json";
         String file = "";
+        setPath(directory, fileName);
         // read the content from file
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             String line = bufferedReader.readLine();
             while (line != null) {
-                file = line+"\n";
+                file += line;
                 line = bufferedReader.readLine();
             }
+            System.out.println("JSON: \n"+file);
             bufferedReader.close();
         } catch (FileNotFoundException e) {
             // exception handling
+            System.err.println("File not found");
         } catch (IOException e) {
             // exception handling
         }
         return file;
     }
 
-    private void setPath(String directory){
-        path = this.directory + separator+directory+separator;
+    private void setPath(String directory,String file){
+        path = this.directory + separator+directory+separator+file;
     }
     
 }
