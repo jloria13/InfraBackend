@@ -34,7 +34,6 @@ public class Database {
     }
 
     public ArrayList<String> getDatabases (){
-        System.out.println("Path: "+path);
         ArrayList<String> databases = new ArrayList<>();
         File[] files = new File (path).listFiles();
         for (File file:files){

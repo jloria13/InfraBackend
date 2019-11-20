@@ -14,10 +14,12 @@ public class FileIO {
 
     String directory = System.getProperty("user.dir");
     String separator = System.getProperty("file.separator");
-    String path = directory + separator+"Databases"+separator;
+    String path;
 
-    void writeFile (String text,String name){
+
+    void writeFile (String text,String name,String directory){
         // write the content in file
+        setPath(directory);
         path += name + ".json";
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             bufferedWriter.write(text);
@@ -37,7 +39,8 @@ public class FileIO {
         }
     }
     
-    String readFile(String name) {
+    String readFile(String name,String directory) {
+        setPath(directory);
         name += ".json";
         String file = "";
         // read the content from file
@@ -54,6 +57,10 @@ public class FileIO {
             // exception handling
         }
         return file;
+    }
+
+    private void setPath(String directory){
+        path = this.directory + separator+directory+separator;
     }
     
 }

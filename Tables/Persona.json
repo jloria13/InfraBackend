@@ -12,6 +12,10 @@
       "age": {
         "type": "int",
         "required": false
+      },
+      "eyeColor":{
+          "type": "String",
+          "required": false
       }
     }
   },
