@@ -73,7 +73,6 @@ public class Database {
     }
 
     public boolean validateUser (String user,String password){
-
         String users = reader.readFile("Users", "Databases",true);
         JsonElement elementFile = parser.parse(users);
         JsonObject objectFile = elementFile.getAsJsonObject();
@@ -85,5 +84,26 @@ public class Database {
             if (!userName.equals(user) && userPassword.equals(password)) return false;
         }
         return true;
+    }
+
+    public ArrayList<String> getUserDatabases (String user){
+        ArrayList<String> databases = new ArrayList<>();
+        String users = reader.readFile("Users", "Databases",true);
+        JsonElement elementFile = parser.parse(users);
+        JsonObject objectFile = elementFile.getAsJsonObject();
+        JsonArray usersArray = objectFile.getAsJsonArray("users");
+        for (int i=0; i < usersArray.size();i++){
+            JsonElement elementUser = usersArray.get(i).getAsJsonObject().get("user");
+            String userName = elementUser.getAsJsonObject().get("name").getAsString();
+            JsonArray tablesArray = elementUser.getAsJsonObject().get("databases").getAsJsonArray();
+            if (userName.equals(user)){
+                for (int j=0; j < tablesArray.size();j++){
+                    String table = tablesArray.get(j).getAsString();
+                    databases.add(table);
+                    System.out.println(table);
+                }
+            }
+        }
+        return databases;
     }
 }

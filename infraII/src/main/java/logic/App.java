@@ -5,10 +5,15 @@ public class App {
 
         FileIO herramienta = new FileIO();
         Database database = new Database();
+        //String sin = herramienta.readFile("Users", "Databases", false);
+        //herramienta.writeFile(sin, "Users", "Databases", true);
         //database.isDatabase("Hola");
         //database.getDatabases();
         //database.getTables("eCommmerce");
-        boolean es = database.validateUser("mj", "mauEsElMejor");
+        
+        boolean es = database.validateUser("admin", "123Adm$");
         System.out.println(es);
+        database.getUserDatabases("mj");
+
     }
 }
