@@ -7,5 +7,6 @@ public class App {
         Database database = new Database();
         //database.isDatabase("Hola");
         database.getDatabases();
+        database.getTables("eCommmerce");
     }
 }

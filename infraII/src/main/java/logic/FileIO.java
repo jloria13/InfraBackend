@@ -17,11 +17,12 @@ public class FileIO {
     String path;
 
 
-    void writeFile (String text,String file,String directory){
+    void writeFile (String text,String file,String directory, boolean encrypted){
         // write the content in file
         file += ".json";
         setPath(directory,file);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+            if (encrypted) text = Encryption.encrypt(text);
             bufferedWriter.write(text);
             bufferedWriter.close();
         } catch (IOException e) {
@@ -50,7 +51,6 @@ public class FileIO {
                 file += line;
                 line = bufferedReader.readLine();
             }
-            System.out.println("JSON: \n"+file);
             bufferedReader.close();
         } catch (FileNotFoundException e) {
             // exception handling
@@ -58,6 +58,7 @@ public class FileIO {
         } catch (IOException e) {
             // exception handling
         }
+        file = file.substring(1, file.length()-1);
         return file;
     }
 
