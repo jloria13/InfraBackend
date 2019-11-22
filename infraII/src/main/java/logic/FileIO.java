@@ -20,6 +20,7 @@ public class FileIO {
     void writeFile (String text,String file,String directory, boolean encrypted){
         // write the content in file
         file += ".json";
+        text = "["+text+"]";
         setPath(directory,file);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             if (encrypted) text = Encryption.encrypt(text);
@@ -40,7 +41,7 @@ public class FileIO {
         }
     }
     
-    String readFile(String fileName,String directory) {
+    String readFile(String fileName,String directory,boolean encrypted) {
         fileName += ".json";
         String file = "";
         setPath(directory, fileName);
@@ -58,6 +59,9 @@ public class FileIO {
         } catch (IOException e) {
             // exception handling
         }
+
+        if (encrypted) file = Encryption.decrypt(file);
+
         file = file.substring(1, file.length()-1);
         return file;
     }

@@ -37,7 +37,7 @@ public class Database {
 
     public ArrayList<String> getDatabases(){
         ArrayList<String> databases = new ArrayList<>();
-        String databasesFile = reader.readFile("Databases", "Databases");
+        String databasesFile = reader.readFile("Databases", "Databases",false);
         JsonElement elementFile = parser.parse(databasesFile);
         JsonObject objectFile = elementFile.getAsJsonObject();
         JsonArray databasesArray = objectFile.getAsJsonArray("databases");
@@ -52,7 +52,7 @@ public class Database {
 
     public ArrayList<String> getTables(String database){
         ArrayList<String> tables = new ArrayList<>();
-        String databases = reader.readFile("Databases", "Databases");
+        String databases = reader.readFile("Databases", "Databases",false);
         JsonElement elementFile = parser.parse(databases);
         JsonObject objectFile = elementFile.getAsJsonObject();
         JsonArray databasesArray = objectFile.getAsJsonArray("databases");
@@ -70,5 +70,20 @@ public class Database {
             }
         }
         return tables;
+    }
+
+    public boolean validateUser (String user,String password){
+
+        String users = reader.readFile("Users", "Databases",true);
+        JsonElement elementFile = parser.parse(users);
+        JsonObject objectFile = elementFile.getAsJsonObject();
+        JsonArray usersArray = objectFile.getAsJsonArray("users");
+        for (int i=0; i < usersArray.size();i++){
+            JsonElement elementUser = usersArray.get(i).getAsJsonObject().get("user");
+            String userName = elementUser.getAsJsonObject().get("name").getAsString();
+            String userPassword = elementUser.getAsJsonObject().get("password").getAsString();
+            if (!userName.equals(user) && userPassword.equals(password)) return false;
+        }
+        return true;
     }
 }
