@@ -5,7 +5,12 @@
  */
 package logicaDeVisualizacion;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import logic.Cliente;
 import logic.Database;
 
 /**
@@ -92,16 +97,30 @@ public class LogIn extends javax.swing.JFrame {
     private void aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarMouseClicked
         // TODO add your handling code here:
         Database database = new Database();
+        Cliente cli = new Cliente();
+        ArrayList<String> array = new ArrayList<String>();
+           
         String user = usuario.getText().toLowerCase();
         String password = new String(contraseña.getPassword()).toLowerCase();
+        
+        array.add(user);
+        array.add(password);
 
-        if(database.validateUser(user, password)){
-            VistaAdmi vistaAdmi = new VistaAdmi();
-            vistaAdmi.setVisible(true);
-            dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Usuario o Contraseña incorrecta.");
+        try {
+            if(cli.askLogIn(array)){
+                VistaAdmi vistaAdmi = new VistaAdmi();
+                vistaAdmi.setVisible(true);
+                dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Usuario o Contraseña incorrecta.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_aceptarMouseClicked

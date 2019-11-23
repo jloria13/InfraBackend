@@ -12,6 +12,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -27,10 +28,16 @@ import java.util.logging.Logger;
 
 public class Servidor implements Runnable{
 	private static int intentos = 0;
-	static String ip = "192.168.100.218";//"192.168.100.218";
+	static String ip = "192.168.100.189";//"192.168.100.218";
         static int PUERTO = Integer.parseInt("49153");
-    
-    
+
+        
+        public boolean logIn(ArrayList<String> array){
+            Database database = new Database();
+            boolean respuesta = database.validateUser(array.get(1),array.get(0));           
+            return respuesta;           
+        }
+        
 	public static void main(String[] args) {
          new Thread(new Servidor()).start();
 	}
@@ -43,30 +50,35 @@ public class Servidor implements Runnable{
 		try {
 			
 			socketServer = new ServerSocket (PUERTO);
+                        while(true){
+                            System.out.println("Servidor esperando a que el cliente se conecte");
 
-			System.out.println("Servidor esperando a que el cliente se conecte");
+                            socket = socketServer.accept();
 
-    			socket = socketServer.accept();
+                            System.out.println("Cliente se ha conectado.");
 
-			System.out.println("Cliente se ha conectado.");
+                            InputStream is = socket.getInputStream();
 
-			InputStream is = socket.getInputStream();
-                        
-			InputStreamReader isw = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isw);
-
-			OutputStream os = socket.getOutputStream();
-                        ObjectOutputStream objectOutput = new ObjectOutputStream(os);
-                        
-                        ArrayList<String> array = new ArrayList<String>();
-                        array.add("a");
-                        array.add("B");
-                        
-                        System.out.println("A punto de funcionar");
-                        objectOutput.writeObject(array);
-                        Thread.sleep(10000);
-
-
+                            InputStreamReader isw = new InputStreamReader(is);
+                            BufferedReader br = new BufferedReader(isw);
+                            String respuesta = br.readLine();
+                            
+                            if(respuesta.equals("Inicio")){
+                                System.out.println("Se entró a inicio");
+                                ObjectInputStream ois = new ObjectInputStream(is);
+                                ArrayList<String> array = (ArrayList<String>) ois.readObject();
+                                System.out.println("ESTO ES EL CONTENIDO DEL ARRAY EN INCIO"+ array.get(1) +
+                                        " "+ array.get(1));
+                                boolean resp = logIn(array);
+                                System.out.println("respuesta servidor: "+ resp);
+                                OutputStream os = socket.getOutputStream();
+                                ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+                                objectOutput.writeObject(resp);
+                                Thread.sleep(10000);
+                                System.out.println("Se envió el booleano");
+                            }
+                            
+                        }
 
 		} catch (UnknownHostException e) {
 	          System.err.println("I can't find " + e  );
@@ -74,6 +86,8 @@ public class Servidor implements Runnable{
 	        catch (IOException e) {
 	          e.printStackTrace();
 	        } catch (InterruptedException ex) {
+                Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
     }

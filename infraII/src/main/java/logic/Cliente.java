@@ -28,11 +28,45 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Cliente implements Runnable{
-	static String ip = "192.168.100.218";//"192.168.100.218";
+    static String ip = "192.168.100.189";//"192.168.100.218";
     static int PUERTO = Integer.parseInt("49153");
     static private String status;
     static private String res;
     Socket socket;
+    
+    
+    public boolean askLogIn(ArrayList<String> array) throws IOException, InterruptedException, ClassNotFoundException{       
+        socket = new Socket(ip,PUERTO);
+        System.out.println("Intentando conectar al servidor");
+        InputStream is = socket.getInputStream();
+
+        //InputStreamReader isw = new InputStreamReader(is);
+        //InputStreamReader isr = new InputStreamReader(is);
+        //BufferedReader br = new BufferedReader(isw);
+        
+        OutputStream os = socket.getOutputStream();
+        OutputStreamWriter osw = new OutputStreamWriter(os);
+        BufferedWriter bw = new BufferedWriter(osw);
+        bw.write("Inicio");
+        bw.newLine();
+        bw.flush();
+        System.out.println("Se inicia la pregunta de sesión");
+        Thread.sleep(10000);
+        
+        ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+        objectOutput.writeObject(array);
+        System.out.println("Se envia el array");
+        Thread.sleep(10000);
+        
+        
+        System.out.println("Se recibe respuesta");
+        ObjectInputStream ois = new ObjectInputStream(is);
+        boolean respuesta = (boolean) ois.readObject();
+        System.out.println("respuesta en cliente: " + respuesta);
+
+        
+        return respuesta;
+    }
    
     
     public static void main(String[] args) throws ClassNotFoundException {
