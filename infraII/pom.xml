@@ -30,7 +30,19 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+        <groupId>org.netbeans.external</groupId>
+        <artifactId>AbsoluteLayout</artifactId>
+        <version>RELEASE65</version>
+    </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>netbeans</id>
+      <name>Netbeans rep</name>
+      <url>http://bits.netbeans.org/maven2/</url>
+    </repository>
+  </repositories>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

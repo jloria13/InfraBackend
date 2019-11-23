@@ -78,6 +78,8 @@ public class Database {
         JsonElement elementFile = parser.parse(users);
         JsonObject objectFile = elementFile.getAsJsonObject();
         JsonArray usersArray = objectFile.getAsJsonArray("users");
+        System.out.print("CANTIDAD------: "+usersArray.size());
+      
         for (int i=0; i < usersArray.size();i++){
             JsonElement elementUser = usersArray.get(i).getAsJsonObject().get("user");
             String userName = elementUser.getAsJsonObject().get("name").getAsString();

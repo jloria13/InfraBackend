@@ -43,8 +43,11 @@ public class FileIO {
     
     String readFile(String fileName,String directory,boolean encrypted) {
         fileName += ".json";
+        System.out.println("FILE NAME:   "+ fileName);
         String file = "";
         setPath(directory, fileName);
+        System.out.print("PATH----"+ path);
+        
         // read the content from file
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             String line = bufferedReader.readLine();
@@ -61,8 +64,9 @@ public class FileIO {
         }
 
         if (encrypted) file = Encryption.decrypt(file);
-
+        System.out.println("LENGTH DE FILE__------"+file.length());
         file = file.substring(1, file.length()-1);
+
         return file;
     }
 
