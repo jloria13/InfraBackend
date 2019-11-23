@@ -106,4 +106,26 @@ public class Database {
         }
         return databases;
     }
+
+    public void insertUser (String user, String password){
+        String users = reader.readFile("Users", "Databases",true);
+        JsonElement elementFile = parser.parse(users);
+        JsonObject objectFile = elementFile.getAsJsonObject();
+        JsonArray usersArray = objectFile.getAsJsonArray("users");
+        JsonArray databasesArray = new JsonArray();
+        JsonObject userObject = new JsonObject();
+        JsonObject userDetails = new JsonObject();
+        //Creating user
+        userDetails.addProperty("name", user);
+        userDetails.addProperty("password", password);
+        userDetails.add("databases", databasesArray);
+        userObject.add("user", userDetails);
+        //Adding object to main array
+        usersArray.add(userObject);
+        reader.writeFile(elementFile.toString(), "Users", "Databases", true);
+    }
+
+    public void deleteUser (String user){
+
+    }
 }
