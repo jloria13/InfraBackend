@@ -11,6 +11,7 @@ public class App {
         //database.getDatabases();
         //database.getTables("eCommmerce");
         //database.createUser("ale", "natsudark13");
-        database.deleteUser("ale");
+        boolean as = database.deleteUser("ale");
+        System.out.println(as);
     }
 }
