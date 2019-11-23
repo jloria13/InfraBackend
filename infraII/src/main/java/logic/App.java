@@ -10,7 +10,7 @@ public class App {
         //database.isDatabase("Hola");
         //database.getDatabases();
         //database.getTables("eCommmerce");
-        database.createUser("ale", "natsudark13");
-        boolean ans = database.validateUser("ale", "natsudark13");
+        //database.createUser("ale", "natsudark13");
+        database.deleteUser("ale");
     }
 }

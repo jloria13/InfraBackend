@@ -1,0 +1,25 @@
+[
+    {
+      "users": [
+        {
+          "user":{
+            "name": "admin",
+            "password":"123Adm$",
+            "databases":[
+               "TEC",
+               "eCommmerce"
+            ]
+          }
+        },
+        {
+          "user": {
+            "name": "mj",
+            "password":"mauEsElMejor",
+            "databases": [
+              "TEC"
+            ]
+          }
+        }
+      ]
+    }
+  ]

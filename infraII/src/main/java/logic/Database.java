@@ -125,7 +125,24 @@ public class Database {
         reader.writeFile(elementFile.toString(), "Users", "Databases", true);
     }
 
-    public void deleteUser (String user){
-
+    public boolean deleteUser (String user){
+        String users = reader.readFile("Users", "Databases",true);
+        JsonElement elementFile = parser.parse(users);
+        JsonObject objectFile = elementFile.getAsJsonObject();
+        JsonArray usersArray = objectFile.getAsJsonArray("users");
+        int removePosition=0;
+        for (int i=0; i< usersArray.size();i++){
+            JsonElement elementUser = usersArray.get(i).getAsJsonObject().get("user");
+            String userName = elementUser.getAsJsonObject().get("name").getAsString();
+            if (user.equals(userName)) {
+                removePosition = i;
+                usersArray.remove(removePosition);
+                usersArray.remove(removePosition);
+                break;
+            }
+        }
+        if (removePosition == 0) return false;
+        reader.writeFile(elementFile.toString(), "Users", "Databases", true);
+        return true;
     }
 }
