@@ -35,12 +35,19 @@ public class VistaAdmi extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("VISTA ADMINISTRADOR");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, -1));
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 0, 153));
+        jLabel1.setText(" BIENVENIDO ADMINISTRADOR :)");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 330, 70));
 
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
+
+        crearUsuario.setBackground(new java.awt.Color(153, 204, 255));
+        crearUsuario.setForeground(new java.awt.Color(0, 51, 153));
         crearUsuario.setText("Crear Usuario");
         crearUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -49,6 +56,8 @@ public class VistaAdmi extends javax.swing.JFrame {
         });
         jMenuBar1.add(crearUsuario);
 
+        eliminarUsuario.setBackground(new java.awt.Color(153, 204, 255));
+        eliminarUsuario.setForeground(new java.awt.Color(0, 51, 153));
         eliminarUsuario.setText("Eliminar Usuario");
         eliminarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

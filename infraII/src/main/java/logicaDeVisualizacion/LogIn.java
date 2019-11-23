@@ -49,9 +49,10 @@ public class LogIn extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 0, 102));
         jLabel1.setText("Validación de Credenciales");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 250, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Usuario: ");
@@ -63,7 +64,9 @@ public class LogIn extends javax.swing.JFrame {
         jPanel1.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 170, -1));
         jPanel1.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 170, -1));
 
-        aceptar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        aceptar.setBackground(new java.awt.Color(255, 255, 255));
+        aceptar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aceptar.setForeground(new java.awt.Color(102, 0, 102));
         aceptar.setText("Aceptar");
         aceptar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -72,9 +75,11 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel1.add(aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
 
-        cancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cancelar.setBackground(new java.awt.Color(255, 255, 255));
+        cancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cancelar.setForeground(new java.awt.Color(102, 0, 102));
         cancelar.setText("Cancelar");
-        jPanel1.add(cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, -1, -1));
+        jPanel1.add(cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,10 +100,9 @@ public class LogIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarMouseClicked
-        // TODO add your handling code here:
-        Database database = new Database();
+        // TODO add your handling code here:       
         Cliente cli = new Cliente();
-        ArrayList<String> array = new ArrayList<String>();
+        ArrayList<String> array = new ArrayList<>();
            
         String user = usuario.getText().toLowerCase();
         String password = new String(contraseña.getPassword()).toLowerCase();
@@ -108,9 +112,16 @@ public class LogIn extends javax.swing.JFrame {
 
         try {
             if(cli.askLogIn(array)){
-                VistaAdmi vistaAdmi = new VistaAdmi();
-                vistaAdmi.setVisible(true);
+                if(user.equals("admin")){
+                    VistaAdmi va = new VistaAdmi();
+                    va.setVisible(true);
+                    dispose();
+                }
+                else{
+                VistaUsuario vu = new VistaUsuario();
+                vu.setVisible(true);
                 dispose();
+                }
             }
             else{
                 JOptionPane.showMessageDialog(this, "Usuario o Contraseña incorrecta.");
