@@ -137,7 +137,7 @@ public class Database {
             if (user.equals(userName)) {
                 removePosition = i;
                 usersArray.remove(removePosition);
-                usersArray.remove(removePosition);
+                usersArray.remove(removePosition);//No es un error, se tiene que llamar dos veces
                 break;
             }
         }
