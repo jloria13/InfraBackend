@@ -109,6 +109,9 @@ public class LogIn extends javax.swing.JFrame {
         
         array.add(user);
         array.add(password);
+        
+        System.out.println("SUB0: "+ array.get(0));
+        System.out.println("SUB1: "+ array.get(1));
 
         try {
             if(cli.askLogIn(array)){

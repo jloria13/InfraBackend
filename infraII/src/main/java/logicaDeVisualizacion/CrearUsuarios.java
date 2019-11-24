@@ -1,8 +1,13 @@
 package logicaDeVisualizacion;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import logic.Cliente;
 
 public class CrearUsuarios extends javax.swing.JFrame {
 
@@ -23,6 +28,9 @@ public class CrearUsuarios extends javax.swing.JFrame {
         jButtoncrearUsuario = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,7 +54,7 @@ public class CrearUsuarios extends javax.swing.JFrame {
 
         jButtoncrearUsuario.setBackground(new java.awt.Color(255, 255, 255));
         jButtoncrearUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButtoncrearUsuario.setForeground(new java.awt.Color(0, 153, 153));
+        jButtoncrearUsuario.setForeground(new java.awt.Color(0, 102, 102));
         jButtoncrearUsuario.setText("Crear Usuario");
         jButtoncrearUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -57,7 +65,7 @@ public class CrearUsuarios extends javax.swing.JFrame {
 
         jButtonCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButtonCancelar.setForeground(new java.awt.Color(0, 153, 153));
+        jButtonCancelar.setForeground(new java.awt.Color(0, 102, 102));
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -67,18 +75,40 @@ public class CrearUsuarios extends javax.swing.JFrame {
         jPanel1.add(jButtonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("NOTA: Al digitar un usuario, las letras deben ir en minúscula.");
+        jLabel4.setText("Al digitar un usuario, las letras deben ir en minúscula.");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 340, 30));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("La contraseña debe contener caractéres alfanuméricos y");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 320, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("signos especiales como ! # $ ? @.");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 280, -1));
+
+        atras.setBackground(new java.awt.Color(255, 255, 255));
+        atras.setForeground(new java.awt.Color(0, 102, 102));
+        atras.setText("atrás");
+        atras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                atrasMouseClicked(evt);
+            }
+        });
+        jPanel1.add(atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,8 +138,17 @@ public class CrearUsuarios extends javax.swing.JFrame {
     
     private void jButtoncrearUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtoncrearUsuarioMouseClicked
         
+        Cliente cli = new Cliente();
+        ArrayList<String> array = new ArrayList<>();
+        
         String user = usuario.getText();
         String password = contraseña.getText();
+        
+        array.add(user);
+        array.add(password);
+        
+        System.out.println("ELEMENTO SUB0 " + array.get(0));
+        System.out.println("ELEMENTO SUB1 " + array.get(1));
         
         //Validar campos vacíos.
         if(validarCampoRequerido(user, password)){
@@ -131,6 +170,15 @@ public class CrearUsuarios extends javax.swing.JFrame {
                     + "y algunos de los siguientes caracteres especiales:  ! ? $ # @.");        
         }
         else{
+            try {
+                cli.insertUser(array);
+            } catch (IOException ex) {
+                Logger.getLogger(CrearUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CrearUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CrearUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(this, "USUARIO Y CONTRASEÑA CREADOS EXITOSAMENTE");
         }          
     }//GEN-LAST:event_jButtoncrearUsuarioMouseClicked
@@ -138,9 +186,15 @@ public class CrearUsuarios extends javax.swing.JFrame {
     private void jButtonCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarMouseClicked
         // TODO add your handling code here:
         usuario.setText(" ");
-        contraseña.setText(" ");
-       
+        contraseña.setText(" ");      
     }//GEN-LAST:event_jButtonCancelarMouseClicked
+
+    private void atrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseClicked
+        // TODO add your handling code here:
+        VistaAdmi va = new VistaAdmi();
+        va.setVisible(true);
+        dispose();        
+    }//GEN-LAST:event_atrasMouseClicked
 
 
     public static void main(String args[]) {
@@ -176,6 +230,7 @@ public class CrearUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
     private javax.swing.JTextField contraseña;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtoncrearUsuario;
@@ -183,6 +238,8 @@ public class CrearUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables

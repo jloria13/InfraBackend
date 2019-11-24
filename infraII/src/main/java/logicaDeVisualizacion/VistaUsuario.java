@@ -29,6 +29,8 @@ public class VistaUsuario extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        crearBD = new javax.swing.JButton();
+        verBD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,21 +40,59 @@ public class VistaUsuario extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("BIENVENIDO USUARIO :)");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 250, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 250, -1));
+
+        crearBD.setBackground(new java.awt.Color(255, 255, 255));
+        crearBD.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        crearBD.setText("CREAR BASE DE DATOS");
+        crearBD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                crearBDMouseClicked(evt);
+            }
+        });
+        jPanel1.add(crearBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 200, 40));
+
+        verBD.setBackground(new java.awt.Color(255, 255, 255));
+        verBD.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        verBD.setText("VER BASES DE DATOS");
+        verBD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verBDMouseClicked(evt);
+            }
+        });
+        jPanel1.add(verBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 210, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void crearBDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearBDMouseClicked
+        // TODO add your handling code here:
+        CrearBD cBD = new CrearBD();
+        cBD.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_crearBDMouseClicked
+
+    private void verBDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verBDMouseClicked
+        // TODO add your handling code here:
+        VerBaseDatos vBD = new VerBaseDatos();
+        vBD.setVisible(true);
+        dispose();        
+    }//GEN-LAST:event_verBDMouseClicked
 
     /**
      * @param args the command line arguments
@@ -90,7 +130,9 @@ public class VistaUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton crearBD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton verBD;
     // End of variables declaration//GEN-END:variables
 }

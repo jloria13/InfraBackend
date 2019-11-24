@@ -31,16 +31,52 @@ public class Servidor implements Runnable{
 	static String ip = "192.168.100.189";//"192.168.100.218";
         static int PUERTO = Integer.parseInt("49153");
 
-        
+        //REQUERIMIENTO 1.
         public boolean logIn(ArrayList<String> array){
             Database database = new Database();
-            boolean respuesta = database.validateUser(array.get(1),array.get(0));           
+            boolean respuesta = database.validateUser(array.get(0),array.get(1));           
             return respuesta;           
+        }
+        
+        //REQUERIMIENTO 2.
+        public String insertUser(ArrayList<String> array){
+            Database database = new Database();
+            database.insertUser(array.get(0), array.get(1));
+            return "True: se ha insertado el usuario.";
+        }
+        
+        //REQUERIMIENTO 3.1.
+        public ArrayList<String> getUsers(){
+            Database database = new Database();
+            ArrayList<String> array = new ArrayList<>();
+            array = database.getUsers();
+            return array;
+        }
+        //REQUERIMIENTO 3.2
+        public String deleteUser(String user){
+            Database database = new Database();
+            database.deleteUser(user);
+            return "True: Se ha eliminado el usuario";
+        }
+        
+        //REQUERIMIENTO 4.
+        public String createDataBase(ArrayList<String> array){
+            Database database = new Database();
+            database.insertDatabase(array.get(0), array.get(1));
+            return "True: se ha insertado una base de datos dentro del user.";
         }
         
 	public static void main(String[] args) {
          new Thread(new Servidor()).start();
 	}
+        
+        //REQUERIMIENTO VER BASE DATOS
+        public ArrayList<String> getUsersDatabases(String user){
+            Database database = new Database();
+            ArrayList<String> array = new ArrayList<>();
+            array = database.getUserDatabases(user);
+            return array;
+        }
 
     @Override
     public void run() {
@@ -67,7 +103,7 @@ public class Servidor implements Runnable{
                                 System.out.println("Se entró a inicio");
                                 ObjectInputStream ois = new ObjectInputStream(is);
                                 ArrayList<String> array = (ArrayList<String>) ois.readObject();
-                                System.out.println("ESTO ES EL CONTENIDO DEL ARRAY EN INCIO"+ array.get(1) +
+                                System.out.println("ESTO ES EL CONTENIDO DEL ARRAY EN INCIO"+ array.get(0) +
                                         " "+ array.get(1));
                                 boolean resp = logIn(array);
                                 System.out.println("respuesta servidor: "+ resp);
@@ -77,7 +113,71 @@ public class Servidor implements Runnable{
                                 Thread.sleep(10000);
                                 System.out.println("Se envió el booleano");
                             }
-                            
+                            else if(respuesta.equals("InsertarUsuario")){
+                                System.out.println("Se entró a inicio");
+                                ObjectInputStream ois = new ObjectInputStream(is);
+                                ArrayList<String> array = (ArrayList<String>) ois.readObject();
+                                System.out.println("ESTO ES EL CONTENIDO DEL ARRAY EN INSERTUSER: "+ array.get(0) +
+                                        " "+ array.get(1));
+                                String resp = insertUser(array);
+                                System.out.println("respuesta servidor: "+ resp);
+                                OutputStream os = socket.getOutputStream();
+                                ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+                                objectOutput.writeObject(resp);
+                                Thread.sleep(10000);
+                                System.out.println("Se envió el string");                                
+                            }
+                            else if(respuesta.equals("getUsuarios")){
+                                System.out.println("Se entró a inicio");
+                                //ObjectInputStream ois = new ObjectInputStream(is);
+                                ArrayList<String> resp = getUsers();
+                                System.out.println("respuesta servidor: " + resp);
+                                OutputStream os = socket.getOutputStream();
+                                ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+                                objectOutput.writeObject(resp);
+                                Thread.sleep(10000);
+                                System.out.println("Se envió el array.");                                  
+                            }
+                            else if(respuesta.equals("EliminarUsuario")){
+                                System.out.println("Se entró a inicio");
+                                ObjectInputStream ois = new ObjectInputStream(is);
+                                String user = (String) ois.readObject();
+                                System.out.println("ESTO ES EL CONTENIDO DEL USER: "+ user);
+                                String resp = deleteUser(user);
+                                System.out.println("respuesta servidor: "  + resp);
+                                OutputStream os = socket.getOutputStream();
+                                ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+                                objectOutput.writeObject(resp);
+                                Thread.sleep(10000);
+                                System.out.println("Se envió el string");                               
+                            }
+                            else if(respuesta.equals("CrearBaseDatos")){
+                                System.out.println("Se entró a inicio");
+                                ObjectInputStream ois = new ObjectInputStream(is);
+                                ArrayList<String> array = (ArrayList<String>) ois.readObject();
+                                System.out.println("ESTO ES EL CONTENIDO DEL ARRAY EN INSERTDATABASE: "+ array.get(0) +
+                                        " "+ array.get(1));
+                                String resp = createDataBase(array);
+                                System.out.println("respuesta servidor: "+ resp);
+                                OutputStream os = socket.getOutputStream();
+                                ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+                                objectOutput.writeObject(resp);
+                                Thread.sleep(10000);
+                                System.out.println("Se envió el string");                               
+                            }
+                            else if(respuesta.equals("VerBaseDatosUser")){
+                                System.out.println("Se entró a inicio");
+                                ObjectInputStream ois = new ObjectInputStream(is);
+                                String user = (String) ois.readObject();
+                                System.out.println("ESTO ES EL CONTENIDO DEL USER: "+ user);
+                                ArrayList<String> resp = getUsersDatabases(user);
+                                System.out.println("respuesta servidor: "  + resp);
+                                OutputStream os = socket.getOutputStream();
+                                ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+                                objectOutput.writeObject(resp);
+                                Thread.sleep(10000);
+                                System.out.println("Se envió el string"); 
+                            }
                         }
 
 		} catch (UnknownHostException e) {

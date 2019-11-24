@@ -5,6 +5,13 @@
  */
 package logicaDeVisualizacion;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import logic.Cliente;
+
 /**
  *
  * @author Mari Calvo
@@ -14,8 +21,24 @@ public class EliminarUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form EliminarUsuarios
      */
-    public EliminarUsuarios() {
+    
+    //Método para llenar el comboBox.
+    public void insertUserComboBox() throws IOException, InterruptedException, ClassNotFoundException{
+        Cliente cli = new Cliente();
+        ArrayList<String> usersArray = new ArrayList<>();
+        System.out.println(usersArray);
+        
+        usersArray = cli.getUsers();
+        
+        for(int i = 0; i < usersArray.size(); i++){
+            String user = usersArray.get(i);
+            comboBoxUsers.addItem(user);
+        }                
+    }
+    
+    public EliminarUsuarios() throws IOException, InterruptedException, ClassNotFoundException {
         initComponents();
+        insertUserComboBox();
     }
 
     /**
@@ -27,21 +50,92 @@ public class EliminarUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        comboBoxUsers = new javax.swing.JComboBox<>();
+        eliminar = new javax.swing.JButton();
+        atras = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setText("Mantenimiento de Usuarios");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 250, 30));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Seleccione el usuario a eliminar: ");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        jPanel1.add(comboBoxUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 170, -1));
+
+        eliminar.setBackground(new java.awt.Color(255, 255, 255));
+        eliminar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        eliminar.setForeground(new java.awt.Color(0, 102, 102));
+        eliminar.setText("Eliminar");
+        eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
+
+        atras.setBackground(new java.awt.Color(255, 255, 255));
+        atras.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        atras.setForeground(new java.awt.Color(0, 102, 102));
+        atras.setText("atrás");
+        atras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                atrasMouseClicked(evt);
+            }
+        });
+        jPanel1.add(atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMouseClicked
+        // TODO add your handling code here:
+        Cliente cli = new Cliente();
+        String user = comboBoxUsers.getSelectedItem().toString();
+        System.out.println("EL USER ES: "+ user);
+        
+        try {
+            cli.deleteUser(user);
+        } catch (IOException ex) {
+            Logger.getLogger(EliminarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EliminarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EliminarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "Usuario eliminado exitosamente.");
+        
+    }//GEN-LAST:event_eliminarMouseClicked
+
+    private void atrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseClicked
+        // TODO add your handling code here:
+        VistaAdmi va = new VistaAdmi();
+        va.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_atrasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -73,11 +167,25 @@ public class EliminarUsuarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EliminarUsuarios().setVisible(true);
+                try {
+                    new EliminarUsuarios().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(EliminarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(EliminarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(EliminarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
+    private javax.swing.JComboBox<String> comboBoxUsers;
+    private javax.swing.JButton eliminar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
