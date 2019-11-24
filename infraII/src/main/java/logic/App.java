@@ -10,8 +10,9 @@ public class App {
         //database.isDatabase("Hola");
         //database.getDatabases();
         //database.getTables("eCommmerce");
-        //database.createUser("ale", "natsudark13");
-        boolean as = database.deleteUser("ale");
-        System.out.println(as);
+        database.insertUser("ale", "natsudark13");
+        //boolean as = database.deleteUser("ale");
+        database.insertDatabase("ale", "BikeStore");
+        System.out.println();
     }
 }

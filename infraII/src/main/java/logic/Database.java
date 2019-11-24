@@ -145,4 +145,27 @@ public class Database {
         reader.writeFile(elementFile.toString(), "Users", "Databases", true);
         return true;
     }
+
+    public void insertDatabase (String user,String databaseName){
+        ArrayList<String> databases = new ArrayList<>();
+        String databasesFile = reader.readFile("Databases", "Databases",false);
+        String userFile = reader.readFile("Users","Databases",true);
+        JsonElement elementFileDb = parser.parse(databasesFile);
+        JsonElement elementFileUr = parser.parse(userFile);
+        JsonArray databasesArray = elementFileDb.getAsJsonObject().getAsJsonArray("databases");
+        JsonArray usersArray = elementFileUr.getAsJsonObject().getAsJsonArray("users");
+        for (int i=0;i<usersArray.size();i++){
+            JsonElement userObject = usersArray.get(i).getAsJsonObject().get("user");
+            userObject.getAsJsonObject().getAsJsonArray("databases").add(databaseName);
+        }
+        JsonObject database = new JsonObject();
+        JsonObject databaseDetails = new JsonObject();
+        JsonArray databaseTables = new JsonArray();
+        databaseDetails.addProperty("name", databaseName);
+        databaseDetails.add("tables", databaseTables);
+        database.add("database", databaseDetails);
+        databasesArray.add(database);
+        reader.writeFile(elementFileDb.toString(), "Databases", "Databases", false);
+        reader.writeFile(elementFileUr.toString(),"Users","Databases",true);
+    }
 }
