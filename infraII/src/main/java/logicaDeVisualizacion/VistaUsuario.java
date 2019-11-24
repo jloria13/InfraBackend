@@ -31,6 +31,7 @@ public class VistaUsuario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         crearBD = new javax.swing.JButton();
         verBD = new javax.swing.JButton();
+        atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +62,17 @@ public class VistaUsuario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(verBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 210, 40));
+
+        atras.setBackground(new java.awt.Color(255, 255, 255));
+        atras.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        atras.setForeground(new java.awt.Color(255, 153, 0));
+        atras.setText("atrás");
+        atras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                atrasMouseClicked(evt);
+            }
+        });
+        jPanel1.add(atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,6 +105,13 @@ public class VistaUsuario extends javax.swing.JFrame {
         vBD.setVisible(true);
         dispose();        
     }//GEN-LAST:event_verBDMouseClicked
+
+    private void atrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseClicked
+        // TODO add your handling code here:
+        LogIn li = new LogIn();
+        li.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_atrasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -130,6 +149,7 @@ public class VistaUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
     private javax.swing.JButton crearBD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

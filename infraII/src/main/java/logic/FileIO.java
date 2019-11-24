@@ -46,7 +46,7 @@ public class FileIO {
         System.out.println("FILE NAME:   "+ fileName);
         String file = "";
         setPath(directory, fileName);
-        System.out.print("PATH----"+ path);
+        //System.out.print("PATH----"+ path);
         
         // read the content from file
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
@@ -64,7 +64,7 @@ public class FileIO {
         }
 
         if (encrypted) file = Encryption.decrypt(file);
-        System.out.println("LENGTH DE FILE__------"+file.length());
+        //System.out.println("LENGTH DE FILE__------"+file.length());
         file = file.substring(1, file.length()-1);
 
         return file;

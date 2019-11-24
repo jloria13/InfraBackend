@@ -25,6 +25,11 @@ public class LogIn extends javax.swing.JFrame {
     public LogIn() {
         initComponents();
     }
+    
+    public void limpiarTextField(){
+        usuario.setText(" ");
+        contraseña.setText(" ");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,13 +104,15 @@ public class LogIn extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarMouseClicked
         // TODO add your handling code here:       
         Cliente cli = new Cliente();
         ArrayList<String> array = new ArrayList<>();
            
         String user = usuario.getText().toLowerCase();
-        String password = new String(contraseña.getPassword()).toLowerCase();
+        String password = new String(contraseña.getPassword());
         
         array.add(user);
         array.add(password);
@@ -119,15 +126,19 @@ public class LogIn extends javax.swing.JFrame {
                     VistaAdmi va = new VistaAdmi();
                     va.setVisible(true);
                     dispose();
+                    limpiarTextField();
+                    
                 }
                 else{
                 VistaUsuario vu = new VistaUsuario();
                 vu.setVisible(true);
                 dispose();
+                limpiarTextField();
                 }
             }
             else{
                 JOptionPane.showMessageDialog(this, "Usuario o Contraseña incorrecta.");
+                limpiarTextField();
             }
         } catch (IOException ex) {
             Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);

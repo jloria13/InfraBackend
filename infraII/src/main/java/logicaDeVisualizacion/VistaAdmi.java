@@ -5,6 +5,10 @@
  */
 package logicaDeVisualizacion;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Mari Calvo
@@ -29,9 +33,12 @@ public class VistaAdmi extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        atras = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         crearUsuario = new javax.swing.JMenu();
         eliminarUsuario = new javax.swing.JMenu();
+        crearBD = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,7 +49,18 @@ public class VistaAdmi extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 153));
         jLabel1.setText(" BIENVENIDO ADMINISTRADOR :)");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 330, 70));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 330, 70));
+
+        atras.setBackground(new java.awt.Color(255, 255, 255));
+        atras.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        atras.setForeground(new java.awt.Color(0, 0, 153));
+        atras.setText("atrás");
+        atras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                atrasMouseClicked(evt);
+            }
+        });
+        jPanel1.add(atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, -1, -1));
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -66,15 +84,31 @@ public class VistaAdmi extends javax.swing.JFrame {
         });
         jMenuBar1.add(eliminarUsuario);
 
+        crearBD.setForeground(new java.awt.Color(0, 51, 153));
+        crearBD.setText("Crear Base Datos");
+        crearBD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                crearBDMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(crearBD);
+
+        jMenu1.setForeground(new java.awt.Color(0, 0, 153));
+        jMenu1.setText("Ver Base Datos");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,11 +128,37 @@ public class VistaAdmi extends javax.swing.JFrame {
     }//GEN-LAST:event_crearUsuarioMouseClicked
 
     private void eliminarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarUsuarioMouseClicked
-        // TODO add your handling code here:
-        EliminarUsuarios eu = new EliminarUsuarios();
-        eu.setVisible(true);
-        dispose();
+        try {
+            // TODO add your handling code here:
+            EliminarUsuarios eu = new EliminarUsuarios();
+            eu.setVisible(true);
+            dispose();
+        } catch (IOException | InterruptedException | ClassNotFoundException ex) {
+            Logger.getLogger(VistaAdmi.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_eliminarUsuarioMouseClicked
+
+    private void crearBDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearBDMouseClicked
+        // TODO add your handling code here:
+        CrearBD cBD = new CrearBD();
+        cBD.setVisible(true);
+        dispose();
+        
+    }//GEN-LAST:event_crearBDMouseClicked
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        // TODO add your handling code here:
+        VerBaseDatos vBD = new VerBaseDatos();
+        vBD.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void atrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseClicked
+        // TODO add your handling code here:
+        LogIn li = new LogIn();
+        li.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_atrasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -136,9 +196,12 @@ public class VistaAdmi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
+    private javax.swing.JMenu crearBD;
     private javax.swing.JMenu crearUsuario;
     private javax.swing.JMenu eliminarUsuario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

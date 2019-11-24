@@ -1,1 +1,1 @@
-[{"databases":[{"database":{"name":"TEC","tables":["Persona"]}},{"database":{"name":"eCommmerce","tables":["Client","Product","Order"]}},{"database":{"name":" Comercio","tables":[]}}]}]
+[{"databases":[{"database":{"name":"TEC","tables":["Persona"]}},{"database":{"name":"eCommmerce","tables":["Client","Product","Order"]}},{"database":{"name":" Comercio","tables":[]}},{"database":{"name":"Almacenes","tables":[]}},{"database":{"name":"Electronica","tables":[]}},{"database":{"name":"Tapiceria","tables":[]}}]}]

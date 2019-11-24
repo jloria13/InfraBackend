@@ -34,173 +34,145 @@ public class Cliente implements Runnable{
     static private String res;
     Socket socket;
     
-    //REQUERIMIENTO 1.
-    public boolean askLogIn(ArrayList<String> array) throws IOException, InterruptedException, ClassNotFoundException{       
+    //---------------------------------------------------Métodos------------------------------------------//
+    
+    //Creación del Socket.
+    public void createSocket() throws IOException{
         socket = new Socket(ip,PUERTO);
         System.out.println("Intentando conectar al servidor");
-        InputStream is = socket.getInputStream();
-
-        //InputStreamReader isw = new InputStreamReader(is);
-        //InputStreamReader isr = new InputStreamReader(is);
-        //BufferedReader br = new BufferedReader(isw);
-        
-        OutputStream os = socket.getOutputStream();
-        OutputStreamWriter osw = new OutputStreamWriter(os);
+    }
+    //Escribir la petición.
+    public void writePetition(String petition, OutputStreamWriter osw) throws IOException, InterruptedException{
         BufferedWriter bw = new BufferedWriter(osw);
-        bw.write("Inicio");
+        bw.write(petition);
         bw.newLine();
         bw.flush();
         System.out.println("Se inicia la pregunta de sesión");
         Thread.sleep(10000);
-        
+    }
+    //Envio de parámetros tipo array.
+    public void sendParameters(OutputStream os,ArrayList<String> array) throws IOException, InterruptedException{
         ObjectOutputStream objectOutput = new ObjectOutputStream(os);
         objectOutput.writeObject(array);
-        System.out.println("Se envia el array");
+        System.out.println("Se envia el array: " + array);
         Thread.sleep(10000);
-        
-        
+    }
+    //Envio de parámetros tipo String.
+    public void sendParametersString(OutputStream os, String user) throws IOException, InterruptedException{
+        ObjectOutputStream objectOutput = new ObjectOutputStream(os);
+        objectOutput.writeObject(user);
+        System.out.println("Se envia el string" + user);
+        Thread.sleep(10000);        
+    }
+    //Recibir respuesta booleana.
+    public boolean getResponseBoolean(InputStream is) throws IOException, ClassNotFoundException{
         System.out.println("Se recibe respuesta");
         ObjectInputStream ois = new ObjectInputStream(is);
         boolean respuesta = (boolean) ois.readObject();
         System.out.println("respuesta en cliente: " + respuesta);
-
-        
         return respuesta;
     }
-    
-    //REQUERIMIENTO 2.
-    public String insertUser(ArrayList<String> array) throws IOException, InterruptedException, ClassNotFoundException{
-        
-        socket = new Socket(ip,PUERTO);
-        System.out.println("Intentando conectar al servidor");
-        InputStream is = socket.getInputStream();
-        
-        OutputStream os = socket.getOutputStream();
-        OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write("InsertarUsuario");
-        bw.newLine();
-        bw.flush();
-        System.out.println("Se inicia la pregunta de sesión");
-        Thread.sleep(10000);
-        
-        ObjectOutputStream objectOutput = new ObjectOutputStream(os);
-        objectOutput.writeObject(array);
-        System.out.println("Se envia el array");
-        Thread.sleep(10000);
-        
+    //Recibir respuesta String.
+    public String getResponseString(InputStream is) throws IOException, ClassNotFoundException{
         System.out.println("Se recibe respuesta");
         ObjectInputStream ois = new ObjectInputStream(is);
         String respuesta = (String) ois.readObject();
         System.out.println("respuesta en cliente: " + respuesta);
+        return respuesta;
+    }
+    //Recibir respuesta Array.
+    public ArrayList<String> getResponseArray(InputStream is) throws IOException, ClassNotFoundException{
+        System.out.println("Se recibe respuesta");
+        ObjectInputStream ois = new ObjectInputStream(is);
+        ArrayList<String> respuesta = (ArrayList<String>) ois.readObject();
+        System.out.println("respuesta en cliente: " + respuesta);      
+        return respuesta;       
+    }
+    
+    //-------------------------------------------REQUERIMIENTOS------------------------------------------------------//
+    
+    //REQUERIMIENTO 1.
+    public boolean askLogIn(ArrayList<String> array) throws IOException, InterruptedException, ClassNotFoundException{                     
+        createSocket();
+        InputStream is = socket.getInputStream(); 
+        
+        OutputStream os = socket.getOutputStream();
+        OutputStreamWriter osw = new OutputStreamWriter(os);
+        writePetition("Inicio", osw);
+        
+        sendParameters(os, array);
+        boolean respuesta = getResponseBoolean(is);
+        return respuesta;
+    }    
+    //REQUERIMIENTO 2.
+    public String insertUser(ArrayList<String> array) throws IOException, InterruptedException, ClassNotFoundException{
+        
+        createSocket();
+        InputStream is = socket.getInputStream();
+        
+        OutputStream os = socket.getOutputStream();
+        OutputStreamWriter osw = new OutputStreamWriter(os);
+        writePetition("InsertarUsuario",osw);
+        
+        sendParameters(os,array);
        
+        String respuesta = getResponseString(is);
         return respuesta;     
     }
     //REQUERIMIENTO 3.1
     public ArrayList<String> getUsers() throws IOException, InterruptedException, ClassNotFoundException{
-        socket = new Socket(ip,PUERTO);
-        System.out.println("Intentando conectar al servidor");
+        createSocket();
         InputStream is = socket.getInputStream();
         
         OutputStream os = socket.getOutputStream();
         OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write("getUsuarios");
-        bw.newLine();
-        bw.flush();
-        System.out.println("Se inicia la pregunta de sesión");
-        Thread.sleep(10000);
+        writePetition("getUsuarios", osw);
         
-        System.out.println("Se recibe respuesta");
-        ObjectInputStream ois = new ObjectInputStream(is);
-        ArrayList<String> respuesta = (ArrayList<String>) ois.readObject();
-        System.out.println("respuesta en cliente: " + respuesta);
-       
-        return respuesta;  
-                
-    }
-    
+        ArrayList<String> respuesta = getResponseArray(is);
+        return respuesta;                 
+    }    
     //REQUERIMIENTO 3.2
     public String deleteUser(String user) throws IOException, InterruptedException, ClassNotFoundException{
-        socket = new Socket(ip,PUERTO);
-        System.out.println("Intentando conectar al servidor");
+        createSocket();
         InputStream is = socket.getInputStream();
         
         OutputStream os = socket.getOutputStream();
         OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write("EliminarUsuario");
-        bw.newLine();
-        bw.flush();
-        System.out.println("Se inicia la pregunta de sesión");
-        Thread.sleep(10000);
+        writePetition("EliminarUsuario",osw);
         
-        ObjectOutputStream objectOutput = new ObjectOutputStream(os);
-        objectOutput.writeObject(user);
-        System.out.println("Se envia el string");
-        Thread.sleep(10000);
-        
-        System.out.println("Se recibe respuesta");
-        ObjectInputStream ois = new ObjectInputStream(is);
-        String respuesta = (String) ois.readObject();
-        System.out.println("respuesta en cliente: " + respuesta);
-       
+        sendParametersString(os,user);        
+     
+        String respuesta = getResponseString(is);      
         return respuesta;     
                
     }
     //REQUERIMIENTO 4.
     public String creatDB(ArrayList<String> array) throws IOException, InterruptedException, ClassNotFoundException{
-        socket = new Socket(ip,PUERTO);
-        System.out.println("Intentando conectar al servidor");
+        createSocket();
         InputStream is = socket.getInputStream();
         
         OutputStream os = socket.getOutputStream();
         OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write("CrearBaseDatos");
-        bw.newLine();
-        bw.flush();
-        System.out.println("Se inicia la pregunta de sesión");
-        Thread.sleep(10000);
+        writePetition("CrearBaseDatos",osw);
         
-        ObjectOutputStream objectOutput = new ObjectOutputStream(os);
-        objectOutput.writeObject(array);
-        System.out.println("Se envia el array");
-        Thread.sleep(10000);
+        sendParameters(os, array);
         
-        System.out.println("Se recibe respuesta");
-        ObjectInputStream ois = new ObjectInputStream(is);
-        String respuesta = (String) ois.readObject();
-        System.out.println("respuesta en cliente: " + respuesta);
-       
+        String respuesta = getResponseString(is);
         return respuesta;         
     }
     
     //REQUERIMIENTO VER BASE DATOS.
     public ArrayList<String> getUserDataBases(String user) throws IOException, InterruptedException, ClassNotFoundException{
-        socket = new Socket(ip,PUERTO);
-        System.out.println("Intentando conectar al servidor");
+        createSocket();
         InputStream is = socket.getInputStream();
         
         OutputStream os = socket.getOutputStream();
         OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write("VerBaseDatosUser");
-        bw.newLine();
-        bw.flush();
-        System.out.println("Se inicia la pregunta de sesión");
-        Thread.sleep(10000);
+        writePetition("VerBaseDatosUser",osw);
         
-        ObjectOutputStream objectOutput = new ObjectOutputStream(os);
-        objectOutput.writeObject(user);
-        System.out.println("Se envia el string");
-        Thread.sleep(10000);
-        
-        System.out.println("Se recibe respuesta");
-        ObjectInputStream ois = new ObjectInputStream(is);
-        ArrayList<String> respuesta = (ArrayList<String>) ois.readObject();
-        System.out.println("respuesta en cliente: " + respuesta);
+        sendParametersString(os,user);
        
+        ArrayList<String> respuesta = getResponseArray(is);
         return respuesta;  
     }
    

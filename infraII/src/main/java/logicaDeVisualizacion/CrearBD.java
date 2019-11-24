@@ -24,7 +24,10 @@ public class CrearBD extends javax.swing.JFrame {
     public CrearBD() {
         initComponents();
     }
-
+    public void limpiarTextField(){
+        usuario.setText(" ");
+        baseDatos.setText(" ");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,6 +142,7 @@ public class CrearBD extends javax.swing.JFrame {
             Logger.getLogger(CrearBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(this, "Base de datos creada exitosamente.");
+        baseDatos.setText(" ");
                
     }//GEN-LAST:event_crearBDMouseClicked
 
@@ -149,11 +153,13 @@ public class CrearBD extends javax.swing.JFrame {
             VistaAdmi va = new VistaAdmi();
             va.setVisible(true);
             dispose();
+            limpiarTextField();
         }
         else{
             VistaUsuario vu = new VistaUsuario();
             vu.setVisible(true);
             dispose();
+            limpiarTextField();
         }
     }//GEN-LAST:event_jButton1MouseClicked
 

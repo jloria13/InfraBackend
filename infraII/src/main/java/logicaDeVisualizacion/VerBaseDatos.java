@@ -28,7 +28,9 @@ public class VerBaseDatos extends javax.swing.JFrame {
         modelBD = new DefaultListModel();
         listaBD.setModel(modelBD);
     }
-
+     public void limpiarTextField(){
+        usuario.setText(" ");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +48,7 @@ public class VerBaseDatos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listaBD = new javax.swing.JList<>();
         buscarBD = new javax.swing.JButton();
+        atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,7 +71,7 @@ public class VerBaseDatos extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(listaBD);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 260, 100));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 260, 120));
 
         buscarBD.setBackground(new java.awt.Color(255, 255, 255));
         buscarBD.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -81,15 +84,30 @@ public class VerBaseDatos extends javax.swing.JFrame {
         });
         jPanel1.add(buscarBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 110, -1));
 
+        atras.setBackground(new java.awt.Color(255, 255, 255));
+        atras.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        atras.setForeground(new java.awt.Color(102, 0, 102));
+        atras.setText("atrás");
+        atras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                atrasMouseClicked(evt);
+            }
+        });
+        jPanel1.add(atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,12 +131,26 @@ public class VerBaseDatos extends javax.swing.JFrame {
         for(int i = 0;i < array.size(); i++){
             String database = array.get(i);
             modelBD.addElement(database);           
-        }
-        
-        
-        
-        
+        }             
     }//GEN-LAST:event_buscarBDMouseClicked
+
+    private void atrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseClicked
+        // TODO add your handling code here:
+        String user = usuario.getText();
+        if(user.equals("admin")){
+            VistaAdmi va = new VistaAdmi();
+            va.setVisible(true);
+            dispose();
+            limpiarTextField();
+        }
+        else{
+            VistaUsuario vu = new VistaUsuario();
+            vu.setVisible(true);
+            dispose();
+            limpiarTextField();
+        }
+
+    }//GEN-LAST:event_atrasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -156,6 +188,7 @@ public class VerBaseDatos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
     private javax.swing.JButton buscarBD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
