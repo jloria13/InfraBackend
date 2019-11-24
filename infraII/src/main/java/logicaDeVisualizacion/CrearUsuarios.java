@@ -101,40 +101,34 @@ public class CrearUsuarios extends javax.swing.JFrame {
     public boolean validarUsuarioAlfaNumerico(String usuario){
         return Pattern.matches("[a-z_0-9]+", usuario);
     }
-    //Validar contraseña alfanumerica.
-    public boolean validarContraseñaAlfaNumerico(String contraseña){    
-        return Pattern.matches("[a-zA-Z_0-9]+", contraseña);
+    //Validar caractéres especiales y alfanuméricos.
+    public boolean validarContraseña(String contraseña){
+        return Pattern.matches("([a-zA-Z]+[0-9]+)\\w+[?$#@!]+", contraseña);
     }
-    //Validar caractéres especiales.
-    public boolean validarContraseñaCaracteresEspeciales(String contraseña){
-        //return Pattern.matches("([a-zA-Z]+[0-9]+)\\w+[?$#@!]+", contraseña);
-        Pattern regex = Pattern.compile("([a-zA-Z]+[0-9]+)\\\\w+[?$#@!]+");
-        Matcher matcher = regex.matcher(contraseña);    
-        return matcher.find();
-    }
+    
     private void jButtoncrearUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtoncrearUsuarioMouseClicked
         
         String user = usuario.getText();
         String password = contraseña.getText();
         
+        //Validar campos vacíos.
         if(validarCampoRequerido(user, password)){
             JOptionPane.showMessageDialog(this, "Debe escribir un nombre de usuario y una contraseña");
         }
+        //Validar cantidad caracteres.
         else if(!validarUsuarioCaracteres(user) || !validarContraseñaCaracteres(password)){
             JOptionPane.showMessageDialog(this, "El usuario debe contener entre 7 y 12 caracteres"
                     + " y la contraseña entre 7 y 15 caracteres");
         }
+        //Validar usuario alfanumérico.
         else if(!validarUsuarioAlfaNumerico(user)){
             JOptionPane.showMessageDialog(this, "Usuario debe ser alfanumérico y"
                     + "las letras deben estar en minúscula.");
         }
-       /* else if(!validarContraseñaAlfaNumerico(password)){
-            JOptionPane.showMessageDialog(this, "Contraseña debe ser alfanumérica y "
-                    + "contener signos como !, ?, #, @, $");           
-        }**/
-        else if(!validarContraseñaCaracteresEspeciales(password)){
-            JOptionPane.showMessageDialog(this, "Contraseña debe ser alfanuméricoa y "
-                    + "contener signos como !, ?, #, @, $");        
+        //Validar caracteres especiales y alfanumericos de contraseña.
+        else if(!validarContraseña(password)){
+            JOptionPane.showMessageDialog(this, "Contraseña debe tener caracteres alfanuméricos"
+                    + "y algunos de los siguientes caracteres especiales:  ! ? $ # @.");        
         }
         else{
             JOptionPane.showMessageDialog(this, "USUARIO Y CONTRASEÑA CREADOS EXITOSAMENTE");
