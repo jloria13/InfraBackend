@@ -146,7 +146,7 @@ public class Database {
         return true;
     }
 
-    public void insertDatabase (String user,String databaseName){
+    public boolean insertDatabase (String user,String databaseName){
         ArrayList<String> databases = new ArrayList<>();
         String databasesFile = reader.readFile("Databases", "Databases",false);
         String userFile = reader.readFile("Users","Databases",true);
@@ -156,6 +156,7 @@ public class Database {
         JsonArray usersArray = elementFileUr.getAsJsonObject().getAsJsonArray("users");
         for (int i=0;i<usersArray.size();i++){
             JsonElement userObject = usersArray.get(i).getAsJsonObject().get("user");
+            if (isDatabase(databaseName)) return false;
             userObject.getAsJsonObject().getAsJsonArray("databases").add(databaseName);
         }
         JsonObject database = new JsonObject();
@@ -167,5 +168,38 @@ public class Database {
         databasesArray.add(database);
         reader.writeFile(elementFileDb.toString(), "Databases", "Databases", false);
         reader.writeFile(elementFileUr.toString(),"Users","Databases",true);
+        return true;
     }
+
+    public boolean deleteDatabase (String database){
+        String databasesFile = reader.readFile("Databases", "Databases",false);
+        String userFile = reader.readFile("Users","Databases",true);
+        JsonElement elementFileDb = parser.parse(databasesFile);
+        JsonElement elementFileUr = parser.parse(userFile);
+        JsonArray databasesArray = elementFileDb.getAsJsonObject().getAsJsonArray("databases");
+        JsonArray usersArray = elementFileUr.getAsJsonObject().getAsJsonArray("users");
+        for (int i = 0;i<databasesArray.size();i++){
+            JsonElement elementDatabase = databasesArray.get(i).getAsJsonObject().get("database");
+            String databaseName = elementDatabase.getAsJsonObject().get("name").getAsString();
+            if (databaseName.equals(database)){
+                databasesArray.remove(i);
+            }
+        }
+        for (int i=0; i < usersArray.size();i++){
+            JsonElement elementUser = usersArray.get(i).getAsJsonObject().get("user");
+            String userName = elementUser.getAsJsonObject().get("name").getAsString();
+            JsonArray databasesUserArray = elementUser.getAsJsonObject().get("databases").getAsJsonArray();
+            for (int j=0; j < databasesUserArray.size();j++){
+                String databaseName = databasesUserArray.get(j).getAsString();
+                if (databaseName.equals(database)){
+                    databasesUserArray.remove(j);
+                }
+            }
+
+        }
+        reader.writeFile(elementFileDb.toString(), "Databases", "Databases", false);
+        reader.writeFile(elementFileUr.toString(),"Users","Databases",true);
+        return true;
+    }
+
 }
